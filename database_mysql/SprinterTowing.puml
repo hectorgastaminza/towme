@@ -1,0 +1,138 @@
+@startuml
+class Company {
+  name : String
+  shareholders : Shareholder[]
+  shareTotal : int
+  trucks : Truck[]
+  drivers : Driver[]
+  incomes : Income[]
+  outcomes : Outcome[]
+  clients : Client[]
+  services : Service[]
+  payrates : Payrate[]
+}
+
+class Client {
+  name : String
+  email : String
+  phone : String
+  address : String
+}
+
+class Shareholder {
+   name : String
+   email : String
+   phone : String
+   share : int
+}
+
+class Truck {
+   name : String
+   register : String
+   details : String
+   serviceType : ServiceType
+}
+
+class ServiceType {
+   tow : boolean
+   flatbed : boolean
+   dolly : boolean
+   winch : boolean
+   flatTire : boolean
+   jumpStart : boolean
+   liftWage : int
+}
+
+class Driver {
+   name : String
+   register : String
+   policeCheck : boolean
+   payments : Payment[]
+   workingDays : WorkingDay[]
+}
+
+class WorkingDay {
+   start : Date
+   end : Date
+}
+
+class Payment {
+   date : Date
+   start : Date
+   end : Date
+   amount : float
+   services : Service[]
+   hours : float
+   payrate : Payrate
+}
+
+class Service {
+  date : Date
+  km : float
+  truck : Truck
+  driver : Driver
+  client : Client
+  service : Service
+  payrate : Payrate
+  serviceType : ServiceType
+  details : String
+}
+
+class Payrate {
+   date : Date
+   hour : float
+   km : float
+   service : float
+}
+
+class Register {
+   date : Date
+   name : String
+   amount : float
+   shareholder : Shareholder
+   truck : Truck
+   driver : Driver
+   service : Service
+   payment : Payment
+}
+
+class Outcome {
+   type : enum OutcomeType
+}
+
+class Income {
+   type : enum IncomeType
+}
+
+enum OutcomeType {
+ NONE = 0,
+ INVEST,
+ REPAIR,
+ SUPPLY,
+ PAYMENT,
+}
+
+enum IncomeType {
+ NONE = 0,
+ SELL,
+ SERVICE,
+}
+
+Register <|-- Income
+Register <|-- Outcome
+Company *-- Shareholder
+Company *-- Client
+Company *-- Truck
+Company *-- Driver
+Company *-- Income
+Company *-- Outcome
+Company *-- Payrate
+Company *-- Service
+Truck *-- ServiceType
+Outcome *-- OutcomeType
+Income *-- IncomeType
+Driver *-- WorkingDay
+Driver *-- Payment
+Payment -- Payrate
+Payment -- Service
+@enduml

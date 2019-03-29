@@ -35,6 +35,9 @@ app.get('/', (req, resp) => {
 
 app.get('/api/driver/:id', (req, resp) => {
     //const sql = `CALL db_get_service_driver(?)`;
+
+    console.log(`Get driver ${req.params.id}...`);
+
     const sql = `select * from driver where company_idCompany = (?) and idDriver = (?)`;
  
     db.query(sql, [dbCompany, req.params.id], (error, results, fields) => {
